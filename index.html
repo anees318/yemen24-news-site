@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>يمن 24 - الحدث بين يديك</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>يمن 24 - الحدث بين يديك</h1>
+    <p>آخر الأخبار من المصادر الرسمية والموثوقة</p>
+  </header>
+
+  <main id="news-container">
+    <p>جارٍ تحميل الأخبار...</p>
+  </main>
+
+  <footer>
+    <p>جميع الحقوق محفوظة © 2025</p>
+  </footer>
+
+  <script>
+    const sheetUrl = "https://opensheet.elk.sh/1fosYyTekU4pyUAg0qbMJlpTmkMZGheGf8CLpgtEJQMk/Sheet1";
+    const container = document.getElementById("news-container");
+
+    fetch(sheetUrl)
+      .then(response => response.json())
+      .then(data => {
+        container.innerHTML = "";
+        data.forEach(item => {
+          const card = document.createElement("div");
+          card.className = "news-card";
+          card.innerHTML = `
+            <h2>${item['المصدر']}</h2>
+            <p><strong>التصنيف:</strong> ${item['التصنيف']}</p>
+            <p><strong>النوع:</strong> ${item['النوع']}</p>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch(err => {
+        container.innerHTML = "<p>حدث خطأ أثناء تحميل الأخبار.</p>";
+        console.error("Fetch error:", err);
+      });
+  </script>
+</body>
+</html>
+body {
+  font-family: Arial, sans-serif;
+  direction: rtl;
+  margin: 0;
+  padding: 0;
+  background: #f8f8f8;
+}
+
+header {
+  background-color: #002f6c;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #00509e;
+  padding: 0.5rem;
+}
+
+nav button {
+  background: white;
+  color: #00509e;
+  margin: 0.3rem;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+main {
+  padding: 1rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  border-bottom: 2px solid #00509e;
+  color: #00509e;
+  margin-bottom: 0.5rem;
+}
+
+.article {
+  background: white;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.article a {
+  color: #002f6c;
+  text-decoration: none;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #002f6c;
+  color: white;
+}
